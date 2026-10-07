@@ -238,7 +238,7 @@
             document.getElementById('nextBtn2').disabled = (currentIndex === currentList.length - 1);
 
             if (currentMode === 'cards') {
-                document.getElementById('flagContainer').innerHTML = `<img src="flags/${country.code}.svg" alt="Флаг ${country.name}">`;
+                document.getElementById('flagContainer').innerHTML = `<img src="${country.code}.svg" alt="Флаг ${country.name}">`;
                 document.getElementById('countryName').textContent = country.name;
                 document.getElementById('countryName').classList.add('hidden');
                 
@@ -256,7 +256,7 @@
                 document.getElementById('quizAdmin').textContent = country.admin;
                 document.getElementById('quizOrgs').textContent = country.orgs;
                 
-                document.getElementById('quizAnswer').innerHTML = `<img src="flags/${country.code}.svg" style="max-height:80px; border:2px solid #ccc; border-radius:4px; margin-bottom:10px;"><br><div style="font-size:18px;">${country.name}</div><div style="font-weight:normal; font-size:14px; margin-top:5px;">${country.location}</div>`;
+                document.getElementById('quizAnswer').innerHTML = `<img src="${country.code}.svg" style="max-height:80px; border:2px solid #ccc; border-radius:4px; margin-bottom:10px;"><br><div style="font-size:18px;">${country.name}</div><div style="font-weight:normal; font-size:14px; margin-top:5px;">${country.location}</div>`;
                 document.getElementById('quizAnswer').style.display = 'none';
                 document.getElementById('answerBtn').textContent = 'Показать ответ';
             }
