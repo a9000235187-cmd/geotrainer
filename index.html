@@ -340,5 +340,41 @@
 
         updateFilteredCountries();
     </script>
+    <!-- Базовая защита от копирования -->
+<script>
+    // 1. Блокировка правой кнопки мыши
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // 2. Блокировка выделения текста
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+    });
+
+    // 3. Блокировка горячих клавиш разработчика (F12, Ctrl+U, Ctrl+Shift+I и т.д.)
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && ['u', 'U', 's', 'S', 'p', 'P'].includes(e.key)) || 
+            (e.ctrlKey && e.shiftKey && ['i', 'I', 'j', 'J', 'c', 'C'].includes(e.key))) {
+            e.preventDefault();
+        }
+    });
+
+    // 4. Блокировка перетаскивания картинок (флагов)
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+    });
+</script>
+
+<!-- Знак копирайта -->
+<footer style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 13px; margin-top: 10px; border-top: 1px solid #eee;">
+    © 2026 GeoTrainer. Все права защищены. Копирование материалов запрещено.
+</footer>
+
+</body>
+</html>
 </body>
 </html>
