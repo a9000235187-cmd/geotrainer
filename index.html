@@ -75,7 +75,7 @@
             align-items: center;
         }
         .flag-container img {
-            max-width: 160px;
+            width: 160px;
             max-height: 110px;
             border: 2px solid #ccc;
             border-radius: 4px;
@@ -145,9 +145,9 @@
                 <select id="regionFilter">
                     <option value="all">🌍 Все регионы</option>
                     <option value="Европа">🇪🇺 Европа</option>
-                    <option value="Азия"> Азия</option>
+                    <option value="Азия">🌏 Азия</option>
                     <option value="Америка">🌎 Америка</option>
-                    <option value="Африка"> Африка</option>
+                    <option value="Африка">🌍 Африка</option>
                     <option value="Океания">🌊 Океания</option>
                 </select>
                 <button id="randomBtn">🎲 Случайная</button>
@@ -171,8 +171,8 @@
                 <button class="btn btn-details" id="detailsBtn">Показать детали</button>
                 
                 <div class="details hidden" id="detailsBlock">
-                    <p><strong>🏛️ Столица:</strong> <span id="capital"></span></p>
-                    <p><strong> Расположение:</strong> <span id="location"></span></p>
+                    <p><strong>️ Столица:</strong> <span id="capital"></span></p>
+                    <p><strong>📍 Расположение:</strong> <span id="location"></span></p>
                     <p><strong>⚖️ Форма правления:</strong> <span id="government"></span></p>
                     <p><strong>🗺️ АТД:</strong> <span id="admin"></span></p>
                     <p><strong>🤝 Членство в МО:</strong> <span id="orgs"></span></p>
@@ -182,10 +182,10 @@
             <div id="quizMode" class="hidden">
                 <div class="hint-text">Прочитайте подсказки и угадайте страну</div>
                 <div class="quiz-hints">
-                    <p><strong>🏛️ Столица:</strong> <span id="quizCapital"></span></p>
-                    <p><strong>️ Форма правления:</strong> <span id="quizGov"></span></p>
+                    <p><strong>️ Столица:</strong> <span id="quizCapital"></span></p>
+                    <p><strong>⚖️ Форма правления:</strong> <span id="quizGov"></span></p>
                     <p><strong>🗺️ АТД:</strong> <span id="quizAdmin"></span></p>
-                    <p><strong>🤝 Членство в МО:</strong> <span id="quizOrgs"></span></p>
+                    <p><strong> Членство в МО:</strong> <span id="quizOrgs"></span></p>
                 </div>
                 
                 <div class="nav-controls">
@@ -195,20 +195,32 @@
                 
                 <button class="btn btn-details" id="answerBtn">Показать ответ</button>
                 <div class="quiz-answer" id="quizAnswer"></div>
-                            <div class="counter" id="counter">0 из 0</div>
-           
-            </div>  <!-- закрывающий div карточки -->
-    </div>  <!-- закрывающий div container -->
-    <script src="countries.js"></script>
-    ... (остальной код)
-</body>
-</html>
             </div>
 
             <button class="btn btn-mode" id="modeBtn">Переключить в режим ТЕСТ</button>
             <div class="counter" id="counter">0 из 0</div>
+
+            <div style="text-align:center; padding:15px 0 5px 0; color:#7f8c8d; font-size:12px; border-top:1px solid #eee; margin-top:15px;">
+                © 2026 GeoTrainer. Все права защищены.
+            </div>
         </div>
     </div>
+
+    <!-- Базовая защита от копирования -->
+    <script>
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('selectstart', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && ['u', 'U', 's', 'S', 'p', 'P'].includes(e.key)) || 
+                (e.ctrlKey && e.shiftKey && ['i', 'I', 'j', 'J', 'c', 'C'].includes(e.key))) {
+                e.preventDefault();
+            }
+        });
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('dragstart', function(e) { e.preventDefault(); });
+        });
+    </script>
 
     <script src="countries.js"></script>
 
@@ -220,13 +232,11 @@
         function updateFilteredCountries() {
             const searchText = document.getElementById('searchInput').value.toLowerCase();
             const regionFilter = document.getElementById('regionFilter').value;
-
             currentList = countriesData.filter(country => {
                 const matchesSearch = country.name.toLowerCase().includes(searchText);
                 const matchesRegion = regionFilter === 'all' || country.region === regionFilter;
                 return matchesSearch && matchesRegion;
             });
-
             currentIndex = 0;
             renderCountry();
         }
@@ -236,10 +246,8 @@
                 document.getElementById('counter').textContent = 'Ничего не найдено';
                 return;
             }
-
             const country = currentList[currentIndex];
             document.getElementById('counter').textContent = `${currentIndex + 1} из ${currentList.length}`;
-            
             document.getElementById('prevBtn').disabled = (currentIndex === 0);
             document.getElementById('nextBtn').disabled = (currentIndex === currentList.length - 1);
             document.getElementById('prevBtn2').disabled = (currentIndex === 0);
@@ -249,13 +257,11 @@
                 document.getElementById('flagContainer').innerHTML = `<img src="${country.code}.svg" alt="Флаг ${country.name}">`;
                 document.getElementById('countryName').textContent = country.name;
                 document.getElementById('countryName').classList.add('hidden');
-                
                 document.getElementById('capital').textContent = country.capital;
                 document.getElementById('location').textContent = country.location;
                 document.getElementById('government').textContent = country.government;
                 document.getElementById('admin').textContent = country.admin;
                 document.getElementById('orgs').textContent = country.orgs;
-                
                 document.getElementById('detailsBlock').classList.add('hidden');
                 document.getElementById('detailsBtn').textContent = 'Показать детали';
             } else {
@@ -263,23 +269,18 @@
                 document.getElementById('quizGov').textContent = country.government;
                 document.getElementById('quizAdmin').textContent = country.admin;
                 document.getElementById('quizOrgs').textContent = country.orgs;
-                
                 document.getElementById('quizAnswer').innerHTML = `<img src="${country.code}.svg" style="max-height:80px; border:2px solid #ccc; border-radius:4px; margin-bottom:10px;"><br><div style="font-size:18px;">${country.name}</div><div style="font-weight:normal; font-size:14px; margin-top:5px;">${country.location}</div>`;
                 document.getElementById('quizAnswer').style.display = 'none';
                 document.getElementById('answerBtn').textContent = 'Показать ответ';
             }
         }
 
-        function changeCountry(direction) {
-            currentIndex += direction;
-            renderCountry();
-        }
+        function changeCountry(direction) { currentIndex += direction; renderCountry(); }
 
         function toggleDetails() {
             const details = document.getElementById('detailsBlock');
             const btn = document.getElementById('detailsBtn');
             const nameEl = document.getElementById('countryName');
-            
             if (details.classList.contains('hidden')) {
                 details.classList.remove('hidden');
                 nameEl.classList.remove('hidden');
@@ -294,7 +295,6 @@
         function showAnswer() {
             const answerDiv = document.getElementById('quizAnswer');
             const btn = document.getElementById('answerBtn');
-            
             if (answerDiv.style.display === 'none') {
                 answerDiv.style.display = 'block';
                 btn.textContent = 'Скрыть ответ';
@@ -309,7 +309,6 @@
             const quizMode = document.getElementById('quizMode');
             const modeBtn = document.getElementById('modeBtn');
             const modeLabel = document.getElementById('modeLabel');
-            
             if (currentMode === 'cards') {
                 currentMode = 'quiz';
                 cardsMode.classList.add('hidden');
@@ -347,7 +346,6 @@
         document.getElementById('regionFilter').addEventListener('change', updateFilteredCountries);
 
         updateFilteredCountries();
-  
-
+    </script>
 </body>
 </html>
