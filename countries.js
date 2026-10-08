@@ -1,5 +1,5 @@
 const countriesData = [
-  {code:"af",name:"Афганистан",region:"Азия",capital:"Кабул",location:"Южная Азия",government:"Исламский эмират",admin:"Унитарное",orgs:"ООН, ОИС, ШОС(наблюдатель)"},
+  {code:"af",name:"Афганистан",region:"Азия",capital:"Кабул",location:"Южная Азия",government:"Теократия (Исламский эмират)",admin:"Унитарное",orgs:"ООН, ОИС, ШОС(наблюдатель)"},
   {code:"al",name:"Албания",region:"Европа",capital:"Тирана",location:"Южная Европа",government:"Парламентская республика",admin:"Унитарное",orgs:"ООН, НАТО"},
   {code:"dz",name:"Алжир",region:"Африка",capital:"Алжир",location:"Северная Африка",government:"Полупрезидентская республика",admin:"Унитарное",orgs:"ООН, ЛАГ, АС, ОПЕК"},
   {code:"ad",name:"Андорра",region:"Европа",capital:"Андорра-ла-Велья",location:"Южная Европа",government:"Парламентское княжество",admin:"Унитарное",orgs:"ООН, Совет Европы"},
