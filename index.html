@@ -139,6 +139,13 @@
                 document.getElementById('government').textContent = country.government;
                 document.getElementById('admin').textContent = country.admin;
                 document.getElementById('orgs').textContent = country.orgs;
+                const noteLine = document.getElementById('noteLine');
+if (country.note) {
+    noteLine.textContent = country.note;
+    noteLine.style.display = 'block';
+} else {
+    noteLine.style.display = 'none';
+}
                 document.getElementById('detailsBlock').classList.add('hidden');
                 document.getElementById('detailsBtn').textContent = 'Показать детали';
             } else {
