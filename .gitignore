@@ -1,0 +1,14 @@
+# Исходники (не публикуем!)
+*.source.js
+
+# Вспомогательные скрипты
+clean_duplicates.js
+fix_orgs_node.js
+app_protected.js
+
+# Node modules
+node_modules/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
