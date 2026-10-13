@@ -1,0 +1,24 @@
+{
+  "name": "geotrainer",
+  "version": "1.0.0",
+  "description": "Интерактивный веб-тренажёр для изучения флагов, столиц и политического устройства стран мира. Разработан с использованием Supabase Auth и системы отслеживания прогресса.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a9000235187-cmd/geotrainer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/a9000235187-cmd/geotrainer/issues"
+  },
+  "homepage": "https://github.com/a9000235187-cmd/geotrainer#readme",
+  "devDependencies": {
+    "javascript-obfuscator": "^5.9.0"
+  }
+}
