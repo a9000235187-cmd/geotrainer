@@ -6,198 +6,388 @@
     <title>Политическая география — Тренажёр PRO</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; padding: 20px; min-height: 100vh; display: flex; justify-content: center; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f0f4f8;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
         .container { max-width: 600px; width: 100%; }
-        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; margin-bottom: 20px; }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
         h1 { color: #2c3e50; margin-bottom: 15px; font-size: 22px; }
-        .controls { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .search-box { width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
-        .filters { display: flex; gap: 10px; }
-        .filters select, .filters button { flex: 1; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; background: white; cursor: pointer; }
-        .filters button { background: #9b59b6; color: white; border: none; font-weight: bold; }
-        .mode-label { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
+        .controls {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .search-row, .filters-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .region-select {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+        .random-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #9b59b6;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .random-btn:hover { background: #8e44ad; }
+        .hint-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: help;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .hint-btn:hover { background: #2980b9; transform: scale(1.1); }
+        .mode-label {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
         .mode-cards { background: #d4edda; color: #155724; }
         .mode-quiz { background: #f8d7da; color: #721c24; }
-        .flag-container { margin: 15px 0; min-height: 110px; display: flex; justify-content: center; align-items: center; }
-        .flag-container img { width: 160px; height: auto; border: 2px solid #ccc; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        .country-name { font-size: 22px; font-weight: bold; color: #34495e; margin: 15px 0; min-height: 30px; }
+        .flag-container {
+            margin: 15px 0;
+            min-height: 110px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .flag-container img {
+            max-width: 160px;
+            max-height: 110px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .country-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #34495e;
+            margin: 15px 0;
+            min-height: 30px;
+        }
         .hint-text { color: #7f8c8d; font-size: 14px; font-style: italic; margin-bottom: 15px; }
         .nav-controls { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .nav-btn { background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        .nav-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
         .nav-btn:hover { background: #7f8c8d; }
         .nav-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
-        .btn { color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; margin-bottom: 10px; }
+        .btn {
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
         .btn-details { background: #3498db; }
         .btn-mode { background: #27ae60; }
-        .details, .quiz-hints { text-align: left; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #e9ecef; }
+        .details, .quiz-hints {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #e9ecef;
+        }
         .quiz-hints { background: #fff3cd; border-color: #ffeaa7; }
         .details p, .quiz-hints p { margin: 8px 0; font-size: 14px; line-height: 1.4; }
         .details strong, .quiz-hints strong { color: #2c3e50; }
-        .quiz-answer { display: none; margin-top: 15px; padding: 15px; background: #d4edda; border-radius: 8px; font-weight: bold; color: #155724; }
+        .quiz-answer {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #d4edda;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #155724;
+        }
         .counter { margin-top: 15px; font-size: 14px; color: #7f8c8d; }
         .hidden { display: none !important; }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: help;
-            color: #3498db;
-            font-size: 14px;
-            margin-left: 5px;
-            vertical-align: middle;
-        }
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 220px;
-            background-color: #2c3e50;
-            color: #fff;
+        .footer {
             text-align: center;
-            border-radius: 6px;
-            padding: 8px;
-            position: absolute;
-            z-index: 100;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
-            font-weight: normal;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 13px;
         }
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .footer a:hover { text-decoration: underline; }
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .card-actions .btn { margin-bottom: 0; }
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .feedback-form textarea {
+            min-height: 100px;
+            resize: vertical;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div style="text-align: right; margin-bottom: 10px;">
-    <button id="authBtn" style="background:#3498db; color:white; border:none; padding:8px 20px; border-radius:8px; font-size:14px; cursor:pointer; font-weight:bold;">Войти</button>
-    <span id="userName" style="display: none; color: #2c3e50; font-weight: bold; margin-right: 10px;"></span>
-    <button id="logoutBtn" style="display: none; background: #e74c3c; color: white; border: none; padding: 8px 20px; border-radius: 8px; font-size: 14px; cursor: pointer;">Выйти</button>
-</div>
+            <button id="authBtn" style="background:#3498db; color:white; border:none; padding:8px 20px; border-radius:8px; font-size:14px; cursor:pointer; font-weight:bold;">Войти</button>
+            <span id="userName" style="display: none; color: #2c3e50; font-weight: bold; margin-right: 10px;"></span>
+            <button id="logoutBtn" style="display: none; background: #e74c3c; color: white; border: none; padding: 8px 20px; border-radius: 8px; font-size: 14px; cursor: pointer;">Выйти</button>
+        </div>
+
         <div class="controls">
-            <div style="display:flex; align-items:center; position:relative;">
-    <input type="text" id="searchInput" class="search-box" placeholder="🔍 Поиск страны..." style="flex:1;">
-    <button id="clearSearch" style="display:none; position:absolute; right:35px; background:none; border:none; font-size:18px; cursor:pointer; color:#7f8c8d; padding:5px;">✕</button>
-    <span class="tooltip">ℹ️<span class="tooltip-text">Введите название страны на русском языке</span></span>
-</div>
-            <div class="filters">
-                <div style="display:flex; align-items:center; flex:1;">
-                    <select id="regionFilter" style="flex:1;">
-                        <option value="all">🌍 Все регионы</option>
-                        <option value="Европа">🌏 Европа</option>
-                        <option value="Азия">🌏 Азия</option>
-                        <option value="Америка">🌎 Америка</option>
-                        <option value="Африка">🌍 Африка</option>
-                        <option value="Океания">🌊 Океания</option>
-                    </select>
-                    <span class="tooltip">️ℹ️<span class="tooltip-text">Выберите регион, чтобы сузить список стран</span></span>
-                </div>
-                <div style="display:flex; align-items:center;">
-                    <button id="randomBtn">🎲 Случайная</button>
-                    <span class="tooltip">ℹ️<span class="tooltip-text">Показать случайную страну из доступных</span></span>
-                </div>
+            <div class="search-row">
+                <input type="text" id="searchInput" class="search-box" placeholder="🔍 Поиск страны...">
+                <button id="clearSearch" style="display:none; background:#e74c3c; color:white; border:none; padding:0 12px; border-radius:4px; font-size:16px; cursor:pointer;">✕</button>
+                <button class="hint-btn" title="Введите название страны для поиска">?</button>
+            </div>
+            <div class="filters-row">
+                <select id="regionFilter" class="region-select">
+                    <option value="all">🌏 Все регионы</option>
+                    <option value="Европа">🌏 Европа</option>
+                    <option value="Азия">🌏 Азия</option>
+                    <option value="Америка">🌎 Америка</option>
+                    <option value="Африка">🌍 Африка</option>
+                    <option value="Океания">🌊 Океания</option>
+                </select>
+                <button class="hint-btn" title="Выберите регион для фильтрации">?</button>
+                <button id="randomBtn" class="random-btn"> Случайная</button>
+                <button class="hint-btn" title="Показать случайную страну">?</button>
             </div>
         </div>
+
         <div class="card">
             <h1> Политическая география</h1>
             <div class="mode-label mode-cards" id="modeLabel">РЕЖИМ: КАРТОЧКИ</div>
+            
             <div id="cardsMode">
                 <div class="hint-text">Посмотрите на флаг и вспомните информацию</div>
                 <div class="flag-container" id="flagContainer"></div>
                 <div class="country-name hidden" id="countryName"></div>
+                
                 <div class="nav-controls">
-                    <button class="nav-btn" id="prevBtn">← Назад</button>
-                    <button class="nav-btn" id="nextBtn">Вперёд →</button>
+                    <button class="nav-btn" id="prevBtn">&larr; Назад</button>
+                    <button class="nav-btn" id="nextBtn">Вперёд &rarr;</button>
                 </div>
-                <button class="btn btn-details" id="detailsBtn">Показать детали</button>
+                
+                <div class="card-actions">
+                    <button class="btn btn-details" id="detailsBtn" style="flex:1;">Показать детали</button>
+                    <button class="hint-btn" title="Показать дополнительную информацию о стране">?</button>
+                </div>
+                <button id="learnedBtn" class="btn" style="background:#27ae60; display:none;">✓ Выучил</button>
+                
                 <div class="details hidden" id="detailsBlock">
                     <p><strong>️ Столица:</strong> <span id="capital"></span></p>
-                    <p><strong>📍 Расположение:</strong> <span id="location"></span></p>
+                    <p><strong> Расположение:</strong> <span id="location"></span></p>
                     <p><strong>⚖️ Форма правления:</strong> <span id="government"></span></p>
                     <p><strong>🗺️ АТД:</strong> <span id="admin"></span></p>
                     <p><strong>🤝 Членство в МО:</strong> <span id="orgs"></span></p>
-                    <p id="noteLine" style="display:none; background:#fff3cd; padding:10px; border-radius:6px; border-left:3px solid #f39c12; font-size:13px; margin-top:10px; text-align:left;"></p>
+                    <p id="noteLine" style="display:none; color:#e67e22; font-style:italic; margin-top:10px;"></p>
                 </div>
             </div>
+
             <div id="quizMode" class="hidden">
                 <div class="hint-text">Прочитайте подсказки и угадайте страну</div>
                 <div class="quiz-hints">
-                    <p><strong>🏛️ Столица:</strong> <span id="quizCapital"></span></p>
+                    <p><strong>️ Столица:</strong> <span id="quizCapital"></span></p>
                     <p><strong>⚖️ Форма правления:</strong> <span id="quizGov"></span></p>
-                    <p><strong>️ АТД:</strong> <span id="quizAdmin"></span></p>
-                    <p><strong>🤝 Членство в МО:</strong> <span id="quizOrgs"></span></p>
+                    <p><strong>🗺️ АТД:</strong> <span id="quizAdmin"></span></p>
+                    <p><strong> Членство в МО:</strong> <span id="quizOrgs"></span></p>
                 </div>
+                
                 <div class="nav-controls">
-                    <button class="nav-btn" id="prevBtn2">← Назад</button>
-                    <button class="nav-btn" id="nextBtn2">Вперёд →</button>
+                    <button class="nav-btn" id="prevBtn2">&larr; Назад</button>
+                    <button class="nav-btn" id="nextBtn2">Вперёд &rarr;</button>
                 </div>
+                
                 <button class="btn btn-details" id="answerBtn">Показать ответ</button>
                 <div class="quiz-answer" id="quizAnswer"></div>
             </div>
-            <div style="display:flex; align-items:center; justify-content:center; margin-top:10px;">
-                <button class="btn btn-mode" id="modeBtn" style="margin:0;">Переключить в режим ТЕСТ</button>
-                <span class="tooltip">ℹ️<span class="tooltip-text">Карточки — для запоминания, Тест — для проверки знаний</span></span>
+
+            <div class="card-actions">
+                <button class="btn btn-mode" id="modeBtn" style="flex:1;">Переключить в режим ТЕСТ</button>
+                <button class="hint-btn" title="Переключить режим отображения">?</button>
             </div>
             <div class="counter" id="counter">0 из 0</div>
-            <div style="text-align:center; padding:15px 0 5px 0; color:#7f8c8d; font-size:12px; border-top:1px solid #eee; margin-top:15px;">
-                © 2026 GeoTrainer. Все права защищены.<br>
-                <a href="#" id="feedbackBtn" style="color:#3498db; text-decoration:none; margin-top:5px; display:inline-block;">✉️ Оставить отзыв</a>
+            
+            <!-- Блок статистики прогресса -->
+            <div id="progressStats" style="display:none; margin-top:20px; padding:15px; background:#f8f9fa; border-radius:10px; border:1px solid #e9ecef;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:14px; font-weight:bold; color:#2c3e50;">📊 Мой прогресс</span>
+                    <span id="progressPercent" style="font-size:14px; font-weight:bold; color:#27ae60;">0%</span>
+                </div>
+                <div style="background:#e0e0e0; height:8px; border-radius:4px; overflow:hidden; margin-bottom:10px;">
+                    <div id="progressBar" style="background:#27ae60; height:100%; width:0%; transition:width 0.3s ease;"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; color:#7f8c8d;">
+                    <span>Выучено: <strong id="learnedCount">0</strong></span>
+                    <span>Всего стран: <strong>196</strong></span>
+                </div>
+                
+                <!-- Фильтр "Только невыученные" -->
+                <div style="margin-top:15px; text-align:left;">
+                    <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; color:#2c3e50;">
+                        <input type="checkbox" id="hideLearnedCheckbox" style="width:18px; height:18px; accent-color:#27ae60;">
+                        Показать только невыученные страны
+                    </label>
+                </div>
             </div>
+        </div>
+
+        <div class="footer">
+            © 2026 GeoTrainer. Все права защищены.<br>
+            <a id="feedbackBtn">✉️ Оставить отзыв</a>
         </div>
     </div>
 
-    <!-- Модальное окно для заблокированных стран -->
+    <!-- Модальное окно блокировки -->
     <div id="lockedModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000;">
-        <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:400px; box-shadow:0 10px 40px rgba(0,0,0,0.3);">
-            <div style="font-size:48px; margin-bottom:15px;">🔒</div>
-            <h2 style="color:#2c3e50; margin-bottom:10px;">Полный доступ закрыт</h2>
-            <p style="color:#7f8c8d; margin-bottom:20px; font-size:14px;">В демо-версии доступно только 5 стран. Получите полный доступ ко всем 196 странам мира!</p>
-            <button id="unlockBtn" style="background:#27ae60; color:white; border:none; padding:12px 30px; border-radius:8px; font-size:16px; cursor:pointer; font-weight:bold;">Получить полный доступ</button>
-            <button id="closeModalBtn" style="background:#95a5a6; color:white; border:none; padding:12px 30px; border-radius:8px; font-size:16px; cursor:pointer; margin-left:10px;">Закрыть</button>
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:400px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+            <h2 style="color:#e74c3c; margin-bottom:15px;"> Демо-режим</h2>
+            <p style="color:#7f8c8d; margin-bottom:20px;">Вы просматриваете демо-версию. Для доступа ко всем странам зарегистрируйтесь.</p>
+            <button id="unlockBtn" class="btn" style="background:#3498db;">Получить полный доступ</button>
+            <button id="closeModalBtn" class="btn" style="background:#95a5a6; margin-top:10px;">Закрыть</button>
         </div>
     </div>
 
     <!-- Модальное окно авторизации -->
-<div id="authModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000;">
-    <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:400px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.3); position:relative;">
-        <button id="closeAuthBtn" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:#7f8c8d;">×</button>
-        <h2 style="color:#2c3e50; margin-bottom:20px;">Вход в GeoTrainer</h2>
-        
-        <!-- Форма входа -->
-        <div id="loginForm">
-            <input type="email" id="loginEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
-            <input type="password" id="loginPassword" placeholder="Пароль" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
-            <button id="loginSubmit" class="btn" style="background:#3498db; margin-bottom:10px;">Войти</button>
-            <p style="color:#7f8c8d; font-size:14px;">Нет аккаунта? <a href="#" id="showRegister" style="color:#3498db;">Зарегистрироваться</a></p>
+    <div id="authModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000;">
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:400px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.3); position:relative;">
+            <button id="closeAuthBtn" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:#7f8c8d;">×</button>
+            <h2 style="color:#2c3e50; margin-bottom:20px;">Вход в GeoTrainer</h2>
+            
+            <div id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
+                <input type="password" id="loginPassword" placeholder="Пароль" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
+                <button id="loginSubmit" class="btn" style="background:#3498db; margin-bottom:10px;">Войти</button>
+                <p style="color:#7f8c8d; font-size:14px;">Нет аккаунта? <a href="#" id="showRegister" style="color:#3498db;">Зарегистрироваться</a></p>
+            </div>
+            
+            <div id="registerForm" style="display:none;">
+                <input type="email" id="registerEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
+                <input type="password" id="registerPassword" placeholder="Пароль (мин. 6 символов)" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
+                <button id="registerSubmit" class="btn" style="background:#27ae60; margin-bottom:10px;">Зарегистрироваться</button>
+                <p style="color:#7f8c8d; font-size:14px;">Уже есть аккаунт? <a href="#" id="showLogin" style="color:#3498db;">Войти</a></p>
+            </div>
+            
+            <!-- Экран успешной отправки письма -->
+            <div id="emailSentScreen" style="display:none; text-align:center;">
+                <div style="font-size:48px; margin-bottom:15px;">✉️</div>
+                <h3 style="color:#2c3e50; margin-bottom:10px;">Письмо отправлено!</h3>
+                <p style="color:#7f8c8d; font-size:14px; margin-bottom:20px;">
+                    Мы отправили ссылку для подтверждения на<br>
+                    <strong id="sentEmailDisplay" style="color:#2c3e50;"></strong>
+                </p>
+                <p style="color:#95a5a6; font-size:12px; margin-bottom:20px;">
+                    Пожалуйста, проверьте папку "Входящие" или "Спам".<br>
+                    Ссылка действительна 24 часа.
+                </p>
+                
+                <!-- Таймер обратного отсчета -->
+                <div style="background:#f8f9fa; padding:15px; border-radius:8px; margin-bottom:20px;">
+                    <p style="font-size:13px; color:#7f8c8d; margin-bottom:5px;">Не получили письмо?</p>
+                    <div id="resendTimer" style="font-size:18px; font-weight:bold; color:#3498db;">60</div>
+                    <p style="font-size:12px; color:#95a5a6;">секунд до повторной отправки</p>
+                </div>
+
+                <button id="resendBtn" class="btn" style="background:#95a5a6; cursor:not-allowed;" disabled>Отправить повторно</button>
+                <p style="margin-top:15px; font-size:14px;">
+                    <a href="#" id="backToLoginFromSent" style="color:#3498db;">Вернуться ко входу</a>
+                </p>
+            </div>
+            
+            <div id="authMessage" style="margin-top:10px; font-size:14px;"></div>
         </div>
-        
-        <!-- Форма регистрации -->
-        <div id="registerForm" style="display:none;">
-            <input type="email" id="registerEmail" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
-            <input type="password" id="registerPassword" placeholder="Пароль (мин. 6 символов)" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e0e0e0; border-radius:8px; font-size:16px;">
-            <button id="registerSubmit" class="btn" style="background:#27ae60; margin-bottom:10px;">Зарегистрироваться</button>
-            <p style="color:#7f8c8d; font-size:14px;">Уже есть аккаунт? <a href="#" id="showLogin" style="color:#3498db;">Войти</a></p>
-        </div>
-        
-        <div id="authMessage" style="margin-top:10px; font-size:14px;"></div>
     </div>
-</div>
 
     <!-- Модальное окно обратной связи -->
     <div id="feedbackModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000;">
-        <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:700px; width:90%; max-height:90vh; overflow-y:auto; box-shadow:0 10px 40px rgba(0,0,0,0.3); position:relative;">
+        <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:500px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.3); position:relative;">
             <button id="closeFeedbackBtn" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:24px; cursor:pointer; color:#7f8c8d;">×</button>
-            <h2 style="color:#2c3e50; margin-bottom:20px;">Обратная связь</h2>
-               <div id="googleFormContainer">
-       <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf0yJD8BwoJp1p9ERBsfdj6wH2vnikszig_nZtMDFX_wIeA1Q/viewform?usp=dialog" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>
-   </div>
+            <h2 style="color:#2c3e50; margin-bottom:15px;">✉️ Обратная связь</h2>
+            <p style="color:#7f8c8d; margin-bottom:20px;">Помогите нам улучшить тренажёр!</p>
+            <form class="feedback-form" onsubmit="event.preventDefault(); alert('Спасибо за отзыв! Мы свяжемся с вами.'); document.getElementById('feedbackModal').style.display='none';">
+                <input type="text" id="feedbackName" placeholder="Ваше имя">
+                <input type="email" id="feedbackEmail" placeholder="Ваш email">
+                <textarea placeholder="Ваш отзыв или предложение" required></textarea>
+                <button type="submit" class="btn" style="background:#3498db;">Отправить</button>
+            </form>
+            <p style="color:#7f8c8d; font-size:12px; margin-top:15px;">Или напишите нам: <strong>support@geotrainer.ru</strong></p>
         </div>
     </div>
 
-       <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="countries.js"></script>
     <script src="demo-countries.js"></script>
     <script src="app.js"></script>
