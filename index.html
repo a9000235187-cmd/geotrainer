@@ -371,6 +371,24 @@
         </div>
     </div>
 
+ <!-- Модальное окно: Триал завершён -->
+<div id="trialExpiredModal" class="modal hidden" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:12px; max-width:400px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+        <h3 style="margin-top:0; color:#2c3e50;"> Ваш 3-дневный тестовый период завершён</h3>
+        <p style="color:#7f8c8d; line-height:1.5;">
+            Спасибо, что тестировали GeoTrainer PRO!<br>
+            Сейчас вы можете продолжить обучение в бесплатном режиме (50 базовых стран).
+        </p>
+        <p style="color:#3498db; font-weight:bold;">
+            Полный доступ ко всем 196 странам скоро будет доступен!
+        </p>
+        <button onclick="document.getElementById('trialExpiredModal').style.display='none'; document.getElementById('trialExpiredModal').classList.add('hidden');" 
+                style="background:#3498db; color:white; border:none; padding:12px 30px; border-radius:6px; font-size:16px; cursor:pointer; margin-top:10px;">
+            Продолжить в бесплатном режиме
+        </button>
+    </div>
+</div>
+   
     <!-- Модальное окно обратной связи -->
     <div id="feedbackModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000;">
         <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:500px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.3); position:relative;">
