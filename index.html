@@ -8,6 +8,10 @@
         @keyframes onAutoFillStart { from { opacity: 0.99; } to { opacity: 1; } }
         @keyframes onAutoFillCancel { from { opacity: 1; } to { opacity: 0.99; } }
         input:-webkit-autofill { animation-name: onAutoFillStart; }
+        /* Убираем нативный крестик поиска */
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+        input[type="search"]::-ms-clear { display: none; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; padding: 10px; min-height: 100vh; display: flex; justify-content: center; }
         .container { max-width: 520px; width: 100%; }
@@ -62,13 +66,14 @@
 
         <div class="controls">
             <div class="search-row">
-                <input type="search" id="searchInput" class="search-box" placeholder="🔍 Поиск страны..." name="geo-search-field-xyz-2026" autocomplete="search" autocorrect="off" autocapitalize="off" spellcheck="false" data-1p-ignore value="">
+                <input type="text" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" tabindex="-1" autocomplete="username" aria-hidden="true">
+                <input type="search" id="searchInput" class="search-box" placeholder="🔍 Поиск страны..." name="geo-search-field-xyz-2026" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-1p-ignore value="">
                 <button id="clearSearch" style="display:none; background:#e74c3c; color:white; border:none; padding:0 12px; border-radius:4px; font-size:16px; cursor:pointer;">✕</button>
                 <button class="hint-btn" title="Введите название страны для поиска">?</button>
             </div>
             <div class="filters-row">
                 <select id="regionFilter" class="region-select">
-                    <option value="all">🌏 Все регионы</option>
+                    <option value="all"> Все регионы</option>
                     <option value="Европа">🌏 Европа</option>
                     <option value="Азия">🌏 Азия</option>
                     <option value="Америка">🌎 Америка</option>
@@ -82,7 +87,7 @@
         </div>
 
         <div class="card">
-            <h1>🌍 Политическая география</h1>
+            <h1> Политическая география</h1>
             <div class="mode-label mode-cards" id="modeLabel">РЕЖИМ: КАРТОЧКИ</div>
             
             <div id="cardsMode">
@@ -103,7 +108,7 @@
                 
                 <div class="details hidden" id="detailsBlock">
                     <p><strong>🏛️ Столица:</strong> <span id="capital"></span></p>
-                    <p><strong>📍 Расположение:</strong> <span id="location"></span></p>
+                    <p><strong> Расположение:</strong> <span id="location"></span></p>
                     <p><strong>⚖️ Форма правления:</strong> <span id="government"></span></p>
                     <p><strong>🗺️ АТД:</strong> <span id="admin"></span></p>
                     <p><strong>🤝 Членство в МО:</strong> <span id="orgs"></span></p>
@@ -137,7 +142,7 @@
             
             <div id="progressStats" style="display:none; margin-top:20px; padding:15px; background:#f8f9fa; border-radius:10px; border:1px solid #e9ecef;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <span style="font-size:14px; font-weight:bold; color:#2c3e50;">📊 Мой прогресс</span>
+                    <span style="font-size:14px; font-weight:bold; color:#2c3e50;"> Мой прогресс</span>
                     <span id="progressPercent" style="font-size:14px; font-weight:bold; color:#27ae60;">0%</span>
                 </div>
                 <div style="background:#e0e0e0; height:8px; border-radius:4px; overflow:hidden; margin-bottom:10px;">
