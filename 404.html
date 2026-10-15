@@ -5,9 +5,13 @@
     <meta http-equiv="refresh" content="0; url=/geotrainer/">
     <title>GeoTrainer PRO</title>
     <script>
-        // Двойной редирект для гарантии
-        window.location.href = "/geotrainer/";
-        setTimeout(function() { window.location.replace("/geotrainer/"); }, 100);
+        var hash = window.location.hash;
+        var search = window.location.search;
+        var targetUrl = '/geotrainer/';
+        if (hash) targetUrl += hash;
+        if (search && search !== '?') targetUrl += search;
+        window.location.href = targetUrl;
+        setTimeout(function() { window.location.replace(targetUrl); }, 100);
     </script>
 </head>
 <body>
