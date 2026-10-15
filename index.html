@@ -294,7 +294,7 @@
                     <span>Выучено: <strong id="learnedCount">0</strong></span>
                     <span>Всего стран: <strong>196</strong></span>
                 </div>
-                
+                              
                 <!-- Фильтр "Только невыученные" -->
                 <div style="margin-top:15px; text-align:left;">
                     <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:14px; color:#2c3e50;">
@@ -305,12 +305,23 @@
             </div>
         </div>
 
+                    </div>  <!-- строка 306: закрывает карточку -->
+            
+            <!-- ВСТАВИТЬ СЮДА блок таймера триала -->
+            <div id="trialStats" style="display:none; margin-top:15px; padding:12px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius:10px; color:white; text-align:center; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);">
+                <div style="font-size:13px; opacity:0.9; margin-bottom:5px;">✨ Premium-доступ активен</div>
+                <div style="font-size:18px; font-weight:bold;" id="trialTimer">--</div>
+                <div style="font-size:11px; opacity:0.8; margin-top:5px;">до окончания тестового периода</div>
+            </div>
+            
+        <div class="footer">  <!-- строка 308 -->
+
         <div class="footer">
             © 2026 GeoTrainer. Все права защищены.<br>
             <a id="feedbackBtn">✉️ Оставить отзыв</a>
         </div>
     </div>
-
+        
     <!-- Модальное окно блокировки -->
     <div id="lockedModal" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:1000;">
         <div style="background:white; padding:30px; border-radius:15px; text-align:center; max-width:400px; width:90%; box-shadow:0 10px 40px rgba(0,0,0,0.3);">
