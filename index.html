@@ -4,199 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политическая география — Тренажёр PRO</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f0f4f8;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-        }
-        .container { max-width: 600px; width: 100%; }
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        h1 { color: #2c3e50; margin-bottom: 15px; font-size: 22px; }
-        .controls {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .search-row, .filters-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .search-box {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        .region-select {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            background: white;
-            cursor: pointer;
-        }
-        .random-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            background: #9b59b6;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .random-btn:hover { background: #8e44ad; }
-        .hint-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            border-radius: 6px;
-            font-size: 18px;
-            cursor: help;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-        .hint-btn:hover { background: #2980b9; transform: scale(1.1); }
-        .mode-label {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .mode-cards { background: #d4edda; color: #155724; }
-        .mode-quiz { background: #f8d7da; color: #721c24; }
-        .flag-container {
-            margin: 15px 0;
-            min-height: 110px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .flag-container img {
-            max-width: 160px;
-            max-height: 110px;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-        .country-name {
-            font-size: 22px;
-            font-weight: bold;
-            color: #34495e;
-            margin: 15px 0;
-            min-height: 30px;
-        }
-        .hint-text { color: #7f8c8d; font-size: 14px; font-style: italic; margin-bottom: 15px; }
-        .nav-controls { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .nav-btn {
-            background: #95a5a6;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .nav-btn:hover { background: #7f8c8d; }
-        .nav-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
-        .btn {
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .btn-details { background: #3498db; }
-        .btn-mode { background: #27ae60; }
-        .details, .quiz-hints {
-            text-align: left;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border: 1px solid #e9ecef;
-        }
-        .quiz-hints { background: #fff3cd; border-color: #ffeaa7; }
-        .details p, .quiz-hints p { margin: 8px 0; font-size: 14px; line-height: 1.4; }
-        .details strong, .quiz-hints strong { color: #2c3e50; }
-        .quiz-answer {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: #d4edda;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #155724;
-        }
-        .counter { margin-top: 15px; font-size: 14px; color: #7f8c8d; }
-        .hidden { display: none !important; }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            color: #7f8c8d;
-            font-size: 13px;
-        }
-        .footer a {
-            color: #3498db;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .footer a:hover { text-decoration: underline; }
-        .card-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        .card-actions .btn { margin-bottom: 0; }
-        .feedback-form input, .feedback-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-        .feedback-form textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-    </style>
+   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #f0f4f8;
+        padding: 10px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+    }
+    .container { max-width: 520px; width: 100%; }
+    .card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+        margin-bottom: 12px;
+        position: relative;
+    }
+    h1 { color: #2c3e50; margin-bottom: 10px; font-size: 20px; }
+    .controls {
+        background: white;
+        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .search-row, .filters-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+    .search-box {
+        flex: 1;
+        padding: 8px 10px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+    .region-select {
+        flex: 1;
+        padding: 8px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 13px;
+        background: white;
+        cursor: pointer;
+    }
+    .random-btn {
+        flex: 1;
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        background: #9b59b6;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .random-btn:hover { background: #8e44ad; }
+    .hint-btn {
+        background: #3498db;
+        color: white;
+        border: none;
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: help;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+    .hint-btn:hover { background: #2980b9; transform: scale(1.1); }
+    .mode-label {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .mode-cards { background: #d4edda; color: #155724; }
+    .mode-quiz { background: #f8d7da; color: #721c24; }
+    .flag-container {
+        margin: 10px 0;
+        min-height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .flag-container img {
+        max-width: 140px;
+        max-height: 95px;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .country-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #34495e;
+        margin: 10px 0;
+        min-height: 25px;
+    }
+    .hint-text { color: #7f8c8d; font-size: 13px; font-style: italic; margin-bottom: 10px; }
+    .nav-controls { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .nav-btn {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .nav-btn:hover { background: #7f8c8d; }
+    .nav-btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+    .btn {
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .btn-details { background: #3498db; }
+    .btn-mode { background: #27ae60; }
+    .details, .quiz-hints {
+        text-align: left;
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 10px;
+        border: 1px solid #e9ecef;
+    }
+    .quiz-hints { background: #fff3cd; border-color: #ffeaa7; }
+    .details p, .quiz-hints p { margin: 6px 0; font-size: 13px; line-height: 1.4; }
+    .details strong, .quiz-hints strong { color: #2c3e50; }
+    .quiz-answer {
+        display: none;
+        margin-top: 10px;
+        padding: 12px;
+        background: #d4edda;
+        border-radius: 8px;
+        font-weight: bold;
+        color: #155724;
+    }
+    .counter { margin-top: 10px; font-size: 13px; color: #7f8c8d; }
+    .hidden { display: none !important; }
+    .footer {
+        text-align: center;
+        margin-top: 15px;
+        padding: 10px;
+        color: #7f8c8d;
+        font-size: 12px;
+    }
+    .footer a {
+        color: #3498db;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .footer a:hover { text-decoration: underline; }
+    .card-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+    .card-actions .btn { margin-bottom: 0; }
+    .feedback-form input, .feedback-form textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 13px;
+        font-family: inherit;
+    }
+    .feedback-form textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+    #trialStats {
+        margin-top: 10px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
